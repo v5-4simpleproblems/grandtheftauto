@@ -3,8 +3,9 @@
 	"r_fullscreen":	"false",
 	"r_vsync":	"true",
 	"r_texFiltering":	"false",
-	"g_physicsFps":	"60.000",
+	"g_physicsFps":	"120.000",
 	"mem_enableFrameHeapAllocator":	"true",
 	"a_audioActive":	"true",
 	"g_gtadata":	""
 }
+
