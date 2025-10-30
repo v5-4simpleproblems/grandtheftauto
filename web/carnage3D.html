@@ -4,19 +4,13 @@
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>Carnage 3D WASM</title>
-    <!-- MANDATORY: Ensure proper scaling and responsiveness -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
 
-    <!-- START: Styles, Fonts, and Font Awesome 6.5.2 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- Geist Font -->
     <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap" rel="stylesheet">
-    <!-- Font Awesome 6.5.2 for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- END: Added Styles -->
-
     <style>
       /* Ensure full screen fit and no scroll */
       html, body {
@@ -52,17 +46,6 @@
         width: 100%; 
         height: 100%; 
       }
-
-      /* Button Gradient and Hover Effect (Matching home.html blue-to-fuchsia) */
-      .gradient-button {
-          background-image: linear-gradient(90deg, #0070f3, #f81ce5); /* Adjusted to explicit colors often used in Vercel/Geist themes */
-          box-shadow: 0 0 15px rgba(232, 121, 249, 0.5); /* Soft purple glow */
-          transition: all 0.2s ease-in-out;
-      }
-      .gradient-button:hover {
-          transform: scale(1.02);
-          box-shadow: 0 0 25px rgba(248, 28, 229, 0.7);
-      }
       
     </style>
   </head>
@@ -71,117 +54,6 @@
     <div class="emscripten_border">
       <canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()" tabindex=-1></canvas>
     </div>
-
-    <!-- START: Start Screen Overlay (Widescreen, Dark Theme, Icons, Gradient Button) -->
-    <div id="start-screen-overlay" class="fixed inset-0 bg-black/95 z-[9999] opacity-100 transition-opacity duration-500 flex justify-center items-center p-4">
-        <div class="w-full max-w-5xl"> <!-- Wide content for the controls table -->
-            <!-- Near Black Card with Blue Border (Using explicit near-black color for better match) -->
-            <div class="bg-[#0a0a0a]/95 text-white p-6 sm:p-10 rounded-3xl border border-blue-700 shadow-2xl backdrop-blur-sm flex flex-col space-y-6">
-
-                <!-- Header and Logo -->
-                <div class="flex justify-between items-start">
-                    <div>
-                        <h1 class="text-4xl sm:text-5xl font-extrabold mb-1 text-blue-400">Carnage 3D</h1>
-                        <p class="text-lg text-gray-400">Player 1 Controls & Keybinds</p>
-                    </div>
-                    <!-- Logo (Top Right) -->
-                    <img src="../carnage3d_logo.png" alt="Carnage 3D Logo" class="h-12 sm:h-16 w-auto rounded-xl">
-                </div>
-
-                <!-- Controls Table (Scrollable on small screens) -->
-                <div class="overflow-x-auto border border-gray-800 rounded-xl shadow-inner shadow-gray-800/50">
-                    <table class="min-w-full divide-y divide-gray-700">
-                        <thead class="bg-gray-800">
-                            <tr>
-                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Action</th>
-                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Keyboard</th>
-                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Controller</th>
-                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Context</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-gray-800 text-sm">
-                            <!-- COMMON ACTIONS -->
-                            <tr class="bg-gray-900/80"><td class="px-4 py-2 font-medium text-blue-300" colspan="4">COMMON ACTIONS</td></tr>
-                            <tr class="bg-gray-900/80">
-                                <td class="px-4 py-1.5 whitespace-nowrap flex items-center"><i class="fas fa-redo text-fuchsia-400 w-5"></i><span class="ml-3">Next Weapon</span></td>
-                                <td class="px-4 py-1.5 whitespace-nowrap font-mono text-gray-200">X</td>
-                                <td class="px-4 py-1.5 whitespace-nowrap font-mono text-gray-200">LeftBumper</td>
-                                <td class="px-4 py-1.5 whitespace-nowrap text-gray-400">Common</td>
-                            </tr>
-                            <tr class="bg-gray-900/80">
-                                <td class="px-4 py-1.5 whitespace-nowrap flex items-center"><i class="fas fa-undo text-fuchsia-400 w-5"></i><span class="ml-3">Prev Weapon</span></td>
-                                <td class="px-4 py-1.5 whitespace-nowrap font-mono text-gray-200">Z</td>
-                                <td class="px-4 py-1.5 whitespace-nowrap font-mono text-gray-200">RightBumper</td>
-                                <td class="px-4 py-1.5 whitespace-nowrap text-gray-400">Common</td>
-                            </tr>
-                            
-                            <!-- MOVEMENT & DRIVING -->
-                            <tr class="bg-gray-900/80"><td class="px-4 py-2 font-medium text-blue-300" colspan="4">MOVEMENT & DRIVING</td></tr>
-                            <tr class="bg-gray-900/80">
-                                <td class="px-4 py-1.5 whitespace-nowrap flex items-center"><i class="fas fa-arrow-up text-blue-400 w-5"></i><span class="ml-3">Run / Accelerate</span></td>
-                                <td class="px-4 py-1.5 whitespace-nowrap font-mono text-gray-200">Up</td>
-                                <td class="px-4 py-1.5 whitespace-nowrap font-mono text-gray-200">Up</td>
-                                <td class="px-4 py-1.5 whitespace-nowrap text-gray-400">Both</td>
-                            </tr>
-                            <tr class="bg-gray-900/80">
-                                <td class="px-4 py-1.5 whitespace-nowrap flex items-center"><i class="fas fa-arrow-down text-blue-400 w-5"></i><span class="ml-3">Walk / Reverse</span></td>
-                                <td class="px-4 py-1.5 whitespace-nowrap font-mono text-gray-200">Down</td>
-                                <td class="px-4 py-1.5 whitespace-nowrap font-mono text-gray-200">Down</td>
-                                <td class="px-4 py-1.5 whitespace-nowrap text-gray-400">Both</td>
-                            </tr>
-                            <tr class="bg-gray-900/80">
-                                <td class="px-4 py-1.5 whitespace-nowrap flex items-center"><i class="fas fa-arrows-alt-h text-blue-400 w-5"></i><span class="ml-3">Turn/Steer Left/Right</span></td>
-                                <td class="px-4 py-1.5 whitespace-nowrap font-mono text-gray-200">Left / Right</td>
-                                <td class="px-4 py-1.5 whitespace-nowrap font-mono text-gray-200">Left / Right</td>
-                                <td class="px-4 py-1.5 whitespace-nowrap text-gray-400">Both</td>
-                            </tr>
-                            
-                            <!-- ACTIONS -->
-                            <tr class="bg-gray-900/80"><td class="px-4 py-2 font-medium text-blue-300" colspan="4">PLAYER ACTIONS</td></tr>
-                            <tr class="bg-gray-900/80">
-                                <td class="px-4 py-1.5 whitespace-nowrap flex items-center"><i class="fas fa-crosshairs text-red-500 w-5"></i><span class="ml-3">Shoot</span></td>
-                                <td class="px-4 py-1.5 whitespace-nowrap font-mono text-gray-200">LCtrl</td>
-                                <td class="px-4 py-1.5 whitespace-nowrap font-mono text-gray-200">B</td>
-                                <td class="px-4 py-1.5 whitespace-nowrap text-gray-400">On Foot</td>
-                            </tr>
-                            <tr class="bg-gray-900/80">
-                                <td class="px-4 py-1.5 whitespace-nowrap flex items-center"><i class="fas fa-car-side text-green-500 w-5"></i><span class="ml-3">Enter/Leave Car</span></td>
-                                <td class="px-4 py-1.5 whitespace-nowrap font-mono text-gray-200">Enter</td>
-                                <td class="px-4 py-1.5 whitespace-nowrap font-mono text-gray-200">X</td>
-                                <td class="px-4 py-1.5 whitespace-nowrap text-gray-400">Both</td>
-                            </tr>
-                            <tr class="bg-gray-900/80">
-                                <td class="px-4 py-1.5 whitespace-nowrap flex items-center"><i class="fas fa-user-plus text-green-500 w-5"></i><span class="ml-3">Enter Car (Passenger)</span></td>
-                                <td class="px-4 py-1.5 whitespace-nowrap font-mono text-gray-200">F</td>
-                                <td class="px-4 py-1.5 whitespace-nowrap font-mono text-gray-200">A</td>
-                                <td class="px-4 py-1.5 whitespace-nowrap text-gray-400">On Foot</td>
-                            </tr>
-                            <tr class="bg-gray-900/80">
-                                <td class="px-4 py-1.5 whitespace-nowrap flex items-center"><i class="fas fa-running text-yellow-500 w-5"></i><span class="ml-3">Jump / Handbrake</span></td>
-                                <td class="px-4 py-1.5 whitespace-nowrap font-mono text-gray-200">Space</td>
-                                <td class="px-4 py-1.5 whitespace-nowrap font-mono text-gray-200">LeftTrigger / Y</td>
-                                <td class="px-4 py-1.5 whitespace-nowrap text-gray-400">On Foot / In Car</td>
-                            </tr>
-                            <tr class="bg-gray-900/80">
-                                <td class="px-4 py-1.5 whitespace-nowrap flex items-center"><i class="fas fa-bomb text-yellow-500 w-5"></i><span class="ml-3">Special / Horn</span></td>
-                                <td class="px-4 py-1.5 whitespace-nowrap font-mono text-gray-200">Tab</td>
-                                <td class="px-4 py-1.5 whitespace-nowrap font-mono text-gray-200">A (Horn)</td>
-                                <td class="px-4 py-1.5 whitespace-nowrap text-gray-400">On Foot / In Car</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <!-- Button -->
-                <div class="flex-shrink-0 text-center">
-                    <button id="start-game-button" class="gradient-button w-full md:w-80 inline-flex items-center justify-center px-6 py-4 text-lg font-bold rounded-xl text-white">
-                        <i class="fas fa-play mr-3"></i> Start Carnage 3D
-                    </button>
-                </div>
-
-            </div>
-        </div>
-    </div>
-    <!-- END: Start Screen Overlay -->
 
     <script type='text/javascript'>
       var Module = {
@@ -239,53 +111,9 @@
           if (text) Module.printErr('[post-exception status] ' + text);
         };
       };
-
-      // --- START GAME LOADING LOGIC (Deferred until start button is clicked) ---
-      const startScreenOverlay = document.getElementById('start-screen-overlay');
-      const startGameButton = document.getElementById('start-game-button');
-      const TRANSITION_DURATION_MS = 500; // Match CSS transition duration
-
-      // Function to dynamically load the Emscripten main script
-      function loadGameScript() {
-        // Prevent the start button from being pressed again
-        if (startGameButton) {
-            startGameButton.disabled = true;
-            startGameButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-3"></i> Loading...';
-            // Also update the button class to show it's disabled
-            startGameButton.classList.remove('gradient-button');
-            startGameButton.classList.add('bg-gray-600', 'cursor-not-allowed');
-        }
-
-        // Create the script element to load carnage3D.js
-        const script = document.createElement('script');
-        script.async = true;
-        script.type = 'text/javascript';
-        script.src = 'carnage3D.js';
-
-        // Append the script to the body, which starts the game loading process
-        document.body.appendChild(script);
-      }
-
-      // Function to hide the banner with fade-out and start the game loading
-      const dismissStartScreen = () => {
-        // 1. Start the fade-out (opacity 1 -> 0)
-        startScreenOverlay.classList.remove('opacity-100');
-        startScreenOverlay.classList.add('opacity-0');
-
-        // 2. Wait for the transition to finish before setting display: none
-        setTimeout(() => {
-            startScreenOverlay.style.display = 'none';
-            loadGameScript(); // Start loading the game script
-            // Focus on the canvas so keyboard input works immediately
-            document.getElementById('canvas').focus();
-        }, TRANSITION_DURATION_MS);
-      };
-
-      // Add event listener to the "Start Carnage 3D" button
-      if (startGameButton) {
-        startGameButton.addEventListener('click', dismissStartScreen);
-      }
-      // --- END GAME LOADING LOGIC ---
     </script>
+    
+    <script async type="text/javascript" src="carnage3D.js"></script>
+
   </body>
 </html>
