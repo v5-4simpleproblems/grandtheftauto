@@ -4,10 +4,8 @@
         "gamepad_id": "Gamepad1",
         "actions":
         [
-            // common
             {"action":"NextWeapon", "keycode":"x", "gpbutton":"LeftBumper"},
             {"action":"PrevWeapon", "keycode":"z", "gpbutton":"RightBumper"},
-            // on foot
             {"action":"TurnLeft", "keycode":"Left", "gpbutton":"Left"},
             {"action":"TurnRight", "keycode":"Right", "gpbutton":"Right"},
             {"action":"Jump", "keycode":"Space", "gpbutton":"LeftTrigger"},
@@ -17,7 +15,6 @@
             {"action":"EnterCar", "keycode":"Enter", "gpbutton":"X"},
             {"action":"EnterCarAsPassenger", "keycode":"f", "gpbutton":"A"},
             {"action":"Special", "keycode":"Tab"},
-            // in car
             {"action":"HandBrake", "keycode":"Space", "gpbutton":"Y"},
             {"action":"Accelerate", "keycode":"Up", "gpbutton":"Up"},
             {"action":"Reverse", "keycode":"Down", "gpbutton":"Down"},
@@ -41,3 +38,4 @@
     }
 
 }
+
