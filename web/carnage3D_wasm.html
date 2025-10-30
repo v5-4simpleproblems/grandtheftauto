@@ -1,21 +1,53 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en-us">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>Emscripten-Generated Code</title>
     <style>
-      body {
-        font-family: arial;
+      /* 1. Ensure the page and body take up the full viewport and prevent scrollbars */
+      html, body {
+        height: 100%;
         margin: 0;
-        padding: none;
+        overflow: hidden; /* Prevents scrollbars from appearing */
       }
 
-      .emscripten { padding-right: 0; margin-left: auto; margin-right: auto; display: block; }
-      div.emscripten { text-align: center; }      
-      div.emscripten_border { border: 1px solid black; }
-      /* the canvas *must not* have any border or padding, or mouse coords will be wrong */
-      canvas.emscripten { border: 0px none; background-color: black; }
+      body {
+        font-family: arial;
+        /* Use Flexbox on the body to center the game container */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      /* 2. Game container should take up the full viewport space */
+      div.emscripten_border { 
+        border: 1px solid black; 
+        /* Set to viewport dimensions */
+        width: 100vw;
+        height: 100vh;
+        /* Use Flexbox to center the canvas inside the container */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      /* 3. Canvas must fit inside its container while preserving its aspect ratio */
+      canvas.emscripten { 
+        /* The canvas *must not* have any border or padding */
+        border: 0px none; 
+        background-color: black; 
+        
+        /* Make it resize responsively */
+        width: 100%;
+        height: 100%;
+        object-fit: contain; /* The key property: scales to fit inside the container without being cut off or stretched */
+        display: block;
+      }
+      
+      /* Retaining other original styles */
+      .emscripten { padding-right: 0; }
+      div.emscripten { text-align: center; }
 
     </style>
   </head>
@@ -34,6 +66,7 @@
           if (element) element.value = ''; // clear browser cache
           return function(text) {
             if (arguments.length > 1) text = Array.prototype.slice.call(arguments).join(' ');
+            // These replacements are necessary to act as if normally printed to the console:
             console.log(text);
             if (element) {
               element.value += text + "\n";
@@ -48,9 +81,22 @@
         canvas: (function() {
           var canvas = document.getElementById('canvas');
 
-          // As a default initial behavior, pop up an alert when webgl context is lost. To make your
-          // application robust, you may want to override this behavior before shipping!
-          // See http://www.khronos.org/registry/webgl/specs/latest/1.0/#5.15.2
+          // As a default in C/C++, if you don't use window.devicePixelRatio,
+          // more pixels will be used than on screen, so everything will look a bit blurry.
+          // This fixes that if you are using a high DPI screen.
+          // This is a browser feature, so we need to check if it exists:
+          if (navigator.appVersion.indexOf('MSIE') !== -1 || navigator.appVersion.indexOf('rv:11.0') !== -1) {
+            // This is Internet Explorer, which does not support the devicePixelRatio property.
+          } else {
+            // Not Internet Explorer, so we can use devicePixelRatio.
+            // Check if it exists and is greater than 1, otherwise, don't use it.
+            if (window.devicePixelRatio && window.devicePixelRatio > 1) {
+              canvas.width = canvas.width * window.devicePixelRatio;
+              canvas.height = canvas.height * window.devicePixelRatio;
+            }
+          }
+
+          // As a default, prevent scrollbars and context menu
           canvas.addEventListener("webglcontextlost", function(e) { alert('WebGL context lost. You will need to reload the page.'); e.preventDefault(); }, false);
 
           return canvas;
@@ -82,8 +128,7 @@
         };
       };
     </script>
-    <script async type="text/javascript" src="carnage3D.js"></script>
+    <script async type="text/javascript" src="carnage3D_wasm.js"></script>
+    
   </body>
 </html>
-
-
